@@ -1,2 +1,4 @@
-PixelGetColor, color, 1104, 1001
-Msgbox Color of the heal bar is %color%
+PixelGetColor, color, 63, 50
+MsgBox Color of the this pixel  is %color%
+
+ExitApp
