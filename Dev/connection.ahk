@@ -2,6 +2,8 @@
 
 IniRead, softExe, ./config.ini, ConfigPerso, softExe
 IniRead, passWord, ./config.ini, ConfigPerso, passWord
+IniRead, uniqueCode, ./config.ini, ConfigPerso, uniqueCode
+
 IniRead, loginButton, ./config.ini, DontTouch, loginButton
 IniRead, playButton, ./config.ini, DontTouch, playButton
 
@@ -10,8 +12,15 @@ IniRead, playButton, ./config.ini, DontTouch, playButton
     runLauncher(softExe)
 
 ;Enter the password and connect to the game 
+    If(%uniqueCode% == True){
+        connectionWithCode(loginButton,playButton,passWord,uniqueCode)
+    }
 
-    enterPwAndLaunchGame(loginButton,playButton,passWord)
+    If(%uniqueCode% == False){
+        connectionWithoutCode(loginButton,playButton,passWord)
+    }
+
+    
 
 ;Stop Spamming Numpad0 after connection And acces to the AH
 
@@ -36,8 +45,47 @@ runLauncher(exe){
     Run, %exe%
 }
 
+connectionWithCode(button,button2,password,uniqueCode){
+    Loop{
+        ImageSearch, foundX, foundY, 0, 0, %A_ScreenWidth%, %A_ScreenHeight%, %button%
+            If (ErrorLevel = 0){
+                break ; image was found break loop and continue
+            }
+    }
 
-enterPwAndLaunchGame(button,button2,password){
+    Sleep, 500
+
+    Send %password%
+
+    InputBox, UniqueCodeClear , Please enter your Unique Code, Prompt,, 200, 100, , , ,
+
+    Send {TAB}
+
+    Sleep 200
+
+    Send %UniqueCodeClear%
+
+    Loop{
+        ImageSearch, foundX, foundY, 0, 0, %A_ScreenWidth%, %A_ScreenHeight%, %button%
+            If (ErrorLevel == 0){
+                Click, %foundX%, %foundY%
+                break ; image was found break loop and continue
+        }
+    }
+
+    Loop{
+        ImageSearch, foundX, foundY, 0, 0, %A_ScreenWidth%, %A_ScreenHeight%, %button2%
+            If (ErrorLevel == 0){
+                ;Click, %foundX%, %foundY%
+                MouseMove, %foundX%, %foundY%
+                break ; image was found break loop and continue
+            }
+        }
+
+    
+}
+
+connectionWithoutCode(button,button2,password){
     Loop{
         ImageSearch, foundX, foundY, 0, 0, %A_ScreenWidth%, %A_ScreenHeight%, %button%
             If (ErrorLevel = 0){
@@ -64,7 +112,6 @@ enterPwAndLaunchGame(button,button2,password){
             }
         }
 }
-
 
 connectToAH(){
     Sleep 10000
