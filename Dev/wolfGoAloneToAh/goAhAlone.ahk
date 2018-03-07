@@ -15,7 +15,15 @@ tpToUldah(){
     Sleep 1000
 
     ControlSend, ,{ctrl down}{q}{ctrl up}, ahk_class FFXIVGAME
-    Sleep 15000
+    
+    Loop {
+        PixelGetColor, healbar, 63, 50 ; Get the color of the Top Left Icon
+            If (healbar = 0x684FC3){
+                Sleep 1000
+                break
+            }
+    }
+
 
 }
 
@@ -55,7 +63,7 @@ tpToAH(){
 
     Sleep 3000
 
-Loop {
+    Loop {
         PixelGetColor, healbar, 63, 50 ; Get the color of the Top Left Icon
             If (healbar = 0x684FC3){
                 Sleep 1000

@@ -24,8 +24,15 @@ Else {
     If(%uniqueCode% == False){
         connectionWithoutCode(loginButton,playButton,passWord)
     }
-
+;Go to AH alone
     
+    tpToUldah()
+
+    goToetherite()
+
+    tpToAH()
+
+    mooveToAh()
 
 ;Stop Spamming Numpad0 after connection And acces to the AH
 
@@ -50,7 +57,7 @@ Else {
 }
     
 ; AllFunction In order of Use
-
+;Connect to the Game
 runLauncher(exe){
     Run, %exe%, , Max UseErrorLevel
     If (ErrorLevel = "ERROR"){
@@ -94,7 +101,18 @@ connectionWithCode(button,button2,password,uniqueCode){
                 break ; image was found break loop and continue
             }
         }
+    Sleep 10000
 
+    Loop {
+        PixelGetColor, healbar, 63, 50 ; Get the color of the Top Left Icon
+            If (healbar = 0x684FC3){
+                break
+            }
+            else {      
+	            ControlSend, ,{Numpad0}, ahk_class FFXIVGAME
+                Sleep 500
+            }
+    }
     
 }
 
@@ -125,9 +143,7 @@ connectionWithoutCode(button,button2,password){
                 break ; image was found break loop and continue
             }
         }
-}
 
-connectToAH(){
     Sleep 10000
 
     Loop {
@@ -140,6 +156,10 @@ connectToAH(){
                 Sleep 500
             }
     }
+}
+
+connectToAH(){
+    
 
     Loop, 2{
         ControlSend, ,{Numpad0}, ahk_class FFXIVGAME
@@ -148,6 +168,8 @@ connectToAH(){
     Sleep 1000
 }
 
+
+;Find Item in AH and take screen
 itemFinder(operator){
      Click, 592, 147
      Sleep 500
@@ -200,6 +222,83 @@ itemFinderSecondPosition(operator){
      Sleep 1000
 
      Return
+}
+
+;Go to AH alone
+
+tpToUldah(){
+    ControlSend, ,{ctrl down}{y}{ctrl up}, ahk_class FFXIVGAME
+    Sleep 1000
+
+    ControlSend, ,{ctrl down}{q}{ctrl up}, ahk_class FFXIVGAME
+    
+    Loop {
+        PixelGetColor, healbar, 63, 50 ; Get the color of the Top Left Icon
+            If (healbar = 0x684FC3){
+                Sleep 1000
+                break
+            }
+    }
+
+
+}
+
+
+goToetherite(){
+    Send {g down}  
+    Sleep 4000
+    Send {g up}
+
+    Send {r down}
+    Sleep 3000
+    Send {r up}
+
+    Send {g down}  
+    Sleep 3000
+    Send {g up}
+
+    Send {r down}
+    Sleep 6000
+    Send {r up}
+
+    Send {g down}
+    Sleep 1000
+    Send {g up}
+}
+
+tpToAH(){
+    Loop 4 {
+        ControlSend, ,{Numpad0}, ahk_class FFXIVGAME
+        Sleep 500 
+    }     
+    MouseMove, 1226, 603
+    Sleep 500
+    Click, 1226, 603
+    Sleep 500
+    Click, 1226, 603
+
+    Sleep 3000
+
+    Loop {
+        PixelGetColor, healbar, 63, 50 ; Get the color of the Top Left Icon
+            If (healbar = 0x684FC3){
+                Sleep 1000
+                break
+            }
+    }
+
+}
+
+mooveToAh(){
+    Send {Numpad7}
+    Sleep 100
+
+    Click 1069,301
+    Sleep 2000
+
+    Send {d down}
+    Sleep 1500
+    Send {d up}
 }
 ExitApp
 b::ExitApp
