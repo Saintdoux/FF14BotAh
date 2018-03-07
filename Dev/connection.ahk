@@ -33,7 +33,7 @@ Else {
 
 ;Search and screen the item
 
-    itemFinder("lingot de cobalt")
+    
 
     itemFinder("minerai de cobalt")
 
@@ -42,6 +42,10 @@ Else {
     itemFinder("sable de palladium")
 
     itemFinder("clat de glace")
+
+    itemFinder("lingot de cobalt")
+
+    itemFinderSecondPosition("mica blanc")
 
 }
     
@@ -85,8 +89,8 @@ connectionWithCode(button,button2,password,uniqueCode){
     Loop{
         ImageSearch, foundX, foundY, 0, 0, %A_ScreenWidth%, %A_ScreenHeight%, %button2%
             If (ErrorLevel == 0){
-                ;Click, %foundX%, %foundY%
-                MouseMove, %foundX%, %foundY%
+                Click, %foundX%, %foundY%
+                ;MouseMove, %foundX%, %foundY%
                 break ; image was found break loop and continue
             }
         }
@@ -116,8 +120,8 @@ connectionWithoutCode(button,button2,password){
     Loop{
         ImageSearch, foundX, foundY, 0, 0, %A_ScreenWidth%, %A_ScreenHeight%, %button2%
             If (ErrorLevel == 0){
-                ;Click, %foundX%, %foundY%
-                MouseMove, %foundX%, %foundY%
+                Click, %foundX%, %foundY%
+                ;MouseMove, %foundX%, %foundY%
                 break ; image was found break loop and continue
             }
         }
@@ -160,6 +164,33 @@ itemFinder(operator){
      Click, 882, 153
      Sleep 500 
      Click, 1056, 153
+     Sleep 2000
+
+     ControlSend, ,{PrintScreen}, ahk_class FFXIVGAME
+     Sleep 500
+
+     ControlSend, ,{Esc}, ahk_class FFXIVGAME
+     Sleep 1000
+
+     Return
+}
+
+itemFinderSecondPosition(operator){
+     Click, 592, 147
+     Sleep 500
+
+     ControlSend, ,{ctrl down}{a}{ctrl up}, ahk_class FFXIVGAME
+     Sleep 500
+
+     ControlSend, ,%operator%, ahk_class FFXIVGAME
+     Sleep 500
+
+     ControlSend, ,{Enter}, ahk_class FFXIVGAME
+     Sleep 1000
+
+     Click, 882, 190
+     Sleep 500 
+     Click, 1056, 190
      Sleep 2000
 
      ControlSend, ,{PrintScreen}, ahk_class FFXIVGAME
